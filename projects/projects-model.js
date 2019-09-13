@@ -41,8 +41,8 @@ function superGetbyId(id){
     const taskQuery = getTasks().where({project_id: id}).first()
     return Promise.all([projectQuery, resourceQuery, taskQuery])
         .then(([project, resource, task])=>{
-            project.resource = resource;
-            project.task = task;
+            project.resources = resource;
+            project.tasks = task;
             return project;
         })
     
@@ -50,7 +50,10 @@ function superGetbyId(id){
 }
 
 function getResources(id){
-    return db('project_resources').where({project_id : id})
+    return db('project_resources as pr')
+    .select(['r.resource_name as resource', 'r.resource_description as description'])
+    .join('resources as r','pr.resource_id', 'r.id' )
+    .where({project_id : id})
 }
 //all tasks
 function getTasks(){
