@@ -6,12 +6,12 @@ module.exports = {
     add, addTask, superGetbyId
 
 }
-
+//get all projects
 function get(){
     return db('projects')
 
 }
-
+//get a project by an id
 function getById(id){
     return db('projects').where({id}).first()
 }
@@ -34,7 +34,7 @@ function addTask(taskData, project_id){
     return db('tasks').where({project_id}).insert({project_id: project_id, ...taskData})
     
 }
-
+//stetch goal
 function superGetbyId(id){
     const projectQuery = getById(id)
     const resourceQuery = getResources(id)
@@ -48,14 +48,14 @@ function superGetbyId(id){
     
 
 }
-
+//getting resources by project id// for stretch
 function getResources(id){
     return db('project_resources as pr')
     .select(['r.resource_name as resource', 'r.resource_description as description'])
     .join('resources as r','pr.resource_id', 'r.id' )
     .where({project_id : id})
 }
-//all tasks
+//all tasks //for stretch stretch
 function getTasks(){
     return db('tasks')
     .select([

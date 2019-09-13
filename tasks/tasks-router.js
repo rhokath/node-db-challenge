@@ -3,7 +3,7 @@ const express = require('express');
 const Tasks = require('./tasks-model');
 
 const router = express.Router();
-
+//get all tasks
 router.get('/', (req,res) => {
     Tasks.get()
         .then(tasks => {
@@ -37,6 +37,8 @@ router.get('/:id/project', (req, res) => {
     Tasks.getByProjectId(id)
     .then(projectTasks => {
         if(projectTasks){
+            projectTasks.forEach(task => task.completed ? task.completed = true: task.completed = false)
+
             res.status(200).json(projectTasks)
         } else {
             res.status(404).json({message: 'no project with that id exists'})

@@ -3,7 +3,7 @@ const express = require('express');
 const Projects = require('./projects-model');
 
 const router = express.Router()
-
+//get all projects
 router.get('/', (req,res) => {
     Projects.get()
         .then(projects => {
@@ -15,6 +15,7 @@ router.get('/', (req,res) => {
             res.status(500).json({message: 'trouble retrieving projects'})
         })
 })
+//get a project by id
 router.get('/:id', (req, res) => {
     const {id} = req.params;
     Projects.getById(id)
@@ -30,7 +31,7 @@ router.get('/:id', (req, res) => {
             res.status(500).json({message: 'there was an error retrieving the project'})
         })
 })
-//super get
+//super get//stretch goal
 router.get('/:id/super', (req, res)=> {
     const id = req.params.id;
     Projects.superGetbyId(id)
@@ -46,7 +47,7 @@ router.get('/:id/super', (req, res)=> {
             res.status(500).json({message: 'could not retrieve project'})
         })
 })
-
+//add a new project
 router.post('/', (req, res) => {
     const projectData = req.body;
     Projects.add(projectData)

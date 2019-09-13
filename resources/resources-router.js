@@ -3,7 +3,7 @@ const express = require('express');
 const Resources = require('./resources-model')
 
 const router = express.Router()
-
+//get all resources
 router.get('/', (req,res) => {
     Resources.get()
         .then(resources => {
@@ -14,6 +14,7 @@ router.get('/', (req,res) => {
             res.status(500).json({message: 'trouble retrieving resources'})
         })
 })
+//get a resource by it's id
 router.get('/:id', (req, res) => {
     const {id} = req.params;
     Resources.getById(id)
@@ -29,7 +30,7 @@ router.get('/:id', (req, res) => {
             res.status(500).json({message: 'there was an error retrieving the resource'})
         })
 })
-
+//add a resource
 router.post('/', (req, res) => {
     const resourceData = req.body;
     Resources.add(resourceData)
